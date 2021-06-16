@@ -15,8 +15,8 @@ namespace Exercicio1
 		}
 		public static void Menu()
 		{
-			int opt = 10;
-			while (opt != 0)
+			var opt = "x";
+			while (opt != "0")
 			{
 				Console.WriteLine("         MENU");
 				Console.WriteLine("1. Inserir novo funcionário");
@@ -24,18 +24,18 @@ namespace Exercicio1
 				Console.WriteLine("3. Apagar funcionário");
 				Console.WriteLine("4. Buscar funcionário");
 				Console.WriteLine("0. Sair");
-				opt = Convert.ToInt32(Console.ReadLine());
+				opt = Console.ReadLine();
 				Console.Clear();
 				switch (opt)
 				{
-					case (0):
+					case ("0"):
 						Console.WriteLine("Saindo!!!");
 						break;
-					case (1):
+					case ("1"):
 						Console.WriteLine("Inserir.");
 						AdicionaFuncionario();
 						break;
-					case (2):
+					case ("2"):
 						Console.WriteLine("Listar.");
 						if (funcionarios.Count == 0)
 						{
@@ -47,7 +47,7 @@ namespace Exercicio1
 						Console.WriteLine("Precione ENTER para continuar....");
 						Console.ReadLine();
 						break;
-					case (3):
+					case ("3"):
 						Console.WriteLine("Deletar.");
 
 						if (funcionarios.Count == 0)
@@ -60,7 +60,7 @@ namespace Exercicio1
 						Console.WriteLine("Precione ENTER para continuar....");
 						Console.ReadLine();
 						break;
-					case (4):
+					case ("4"):
 						if (funcionarios.Count == 0)
 						{
 							Console.WriteLine("Você não possui funcionários.");
@@ -70,29 +70,37 @@ namespace Exercicio1
 						var isSearch = false;
 						while (!isSearch)
 						{
-							Console.WriteLine("Selecione o ID do funcionário.");
-							int id = Convert.ToInt32(Console.ReadLine());
-							var funcionario = serachFuncionario(id);
-							if (funcionario == null)
+							try
 							{
-								Console.WriteLine("Funcionario não encontrado.");
+								Console.WriteLine("Selecione o ID do funcionário.");
+								int id = Convert.ToInt32(Console.ReadLine());
+								var funcionario = serachFuncionario(id);
+								if (funcionario == null)
+								{
+									Console.WriteLine("Funcionario não encontrado.");
+								}
+								else
+								{
+									Console.WriteLine(funcionario.ToString());
+								}
+								Console.WriteLine();
+								Console.WriteLine("Deseja buscar um novo funcionário?");
+								Console.WriteLine("Sim -> Entre com qualquer valor.");
+								Console.WriteLine("Não -> Precione ENTER para continuar.");
+								var newSearch = Console.ReadLine();
+								if (String.IsNullOrEmpty(newSearch))
+								{
+									isSearch = true;
+								}
 							}
-							else
-							{
-								Console.WriteLine(funcionario.ToString());
-							}
-                     Console.WriteLine();
-							Console.WriteLine("Deseja buscar um novo funcionário?");
-							Console.WriteLine("Sim -> Entre com qualquer valor.");
-							Console.WriteLine("Não -> Precione ENTER para continuar.");
-							var newSearch = Console.ReadLine();
-							if (!String.IsNullOrEmpty(newSearch))
-							{
-								isSearch = true;
-							}
+                     catch
+                     {
+                        Console.WriteLine("Entre com valores válidos");
+                     }
+
+
+
 						}
-						Console.WriteLine("Precione ENTER para continuar....");
-						Console.ReadLine();
 						break;
 					default:
 						Console.WriteLine("Opção não encontrada.");
