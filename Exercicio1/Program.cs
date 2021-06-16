@@ -22,6 +22,7 @@ namespace Exercicio1
 				Console.WriteLine("1. Inserir novo funcionário");
 				Console.WriteLine("2. Listar funcionários");
 				Console.WriteLine("3. Apagar funcionário");
+				Console.WriteLine("4. Buscar funcionário");
 				Console.WriteLine("0. Sair");
 				opt = Convert.ToInt32(Console.ReadLine());
 				Console.Clear();
@@ -48,27 +49,53 @@ namespace Exercicio1
 						break;
 					case (3):
 						Console.WriteLine("Deletar.");
+
 						if (funcionarios.Count == 0)
 						{
 							Console.WriteLine("Você não possui funcionários.");
 							Console.WriteLine("Por favor insira novos funcionários.");
 							break;
 						}
-						Console.WriteLine("Selecione o ID do funcionário para ser excluído.");
-						int id = Convert.ToInt32(Console.ReadLine());
-						foreach (Funcionario funcionario in funcionarios)
+						RemoveFuncionario();
+						Console.WriteLine("Precione ENTER para continuar....");
+						Console.ReadLine();
+						break;
+					case (4):
+						if (funcionarios.Count == 0)
 						{
-							if (funcionario.GetId() == id)
+							Console.WriteLine("Você não possui funcionários.");
+							Console.WriteLine("Por favor insira novos funcionários.");
+							break;
+						}
+						var isSearch = false;
+						while (!isSearch)
+						{
+							Console.WriteLine("Selecione o ID do funcionário.");
+							int id = Convert.ToInt32(Console.ReadLine());
+							var funcionario = serachFuncionario(id);
+							if (funcionario == null)
 							{
-								RemoveFuncionario(funcionario);
-								Console.WriteLine("Funcionário removido com sucesso!");
-								break;
+								Console.WriteLine("Funcionario não encontrado.");
+							}
+							else
+							{
+								Console.WriteLine(funcionario.ToString());
+							}
+                     Console.WriteLine();
+							Console.WriteLine("Deseja buscar um novo funcionário?");
+							Console.WriteLine("Sim -> Entre com qualquer valor.");
+							Console.WriteLine("Não -> Precione ENTER para continuar.");
+							var newSearch = Console.ReadLine();
+							if (!String.IsNullOrEmpty(newSearch))
+							{
+								isSearch = true;
 							}
 						}
+						Console.WriteLine("Precione ENTER para continuar....");
+						Console.ReadLine();
 						break;
-
 					default:
-						Console.WriteLine("Opção nao encontrada.");
+						Console.WriteLine("Opção não encontrada.");
 						break;
 				}
 			}
@@ -80,9 +107,26 @@ namespace Exercicio1
 				Console.WriteLine(funcionario.ToString());
 		}
 
-		public static void RemoveFuncionario(object funcionario)
+		public static void RemoveFuncionario()
 		{
-			funcionarios.Remove(funcionario);
+			var isDeleted = false;
+			while (!isDeleted)
+			{
+				Console.WriteLine("Selecione o ID do funcionário para ser excluído.");
+				int id = Convert.ToInt32(Console.ReadLine());
+				Funcionario f = serachFuncionario(id);
+				if (f != null)
+				{
+					Console.WriteLine(f.ToString());
+					funcionarios.Remove(f);
+					Console.WriteLine("Funcionário removido com sucesso!");
+					isDeleted = true;
+				}
+				else
+				{
+					Console.WriteLine("Funcionário não existe!");
+				}
+			}
 		}
 
 		public static void AdicionaFuncionario()
@@ -115,7 +159,7 @@ namespace Exercicio1
 									dependentes,
 									imposto));
 						ID++;
-                  isInserted = true;
+						isInserted = true;
 					}
 				}
 				catch (FormatException)
@@ -127,5 +171,16 @@ namespace Exercicio1
 
 		}
 
+		public static Funcionario serachFuncionario(int id)
+		{
+			foreach (Funcionario f in funcionarios)
+			{
+				if (f.GetId() == id)
+				{
+					return f;
+				}
+			}
+			return null;
+		}
 	}
 }
