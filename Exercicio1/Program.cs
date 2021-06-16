@@ -87,37 +87,42 @@ namespace Exercicio1
 
 		public static void AdicionaFuncionario()
 		{
-			try
+			var isInserted = false;
+			while (!isInserted)
 			{
-				Console.WriteLine("Nome: ");
-				var name = Console.ReadLine();
-				Console.WriteLine("Valor da hora trabalhada: ");
-				var valorHoraTrabalhada = Convert.ToDouble(Console.ReadLine());
-				Console.WriteLine("Horas Trabalhadas: ");
-				var horasTrabalhadas = Convert.ToDouble(Console.ReadLine());
-				Console.WriteLine("Quantidade de dependentes: ");
-				var dependentes = Convert.ToInt32(Console.ReadLine());
-				Console.WriteLine("Imposto: ");
-				var imposto = Convert.ToInt32(Console.ReadLine());
-				if (String.IsNullOrEmpty(name))
+				try
+				{
+					Console.WriteLine("Nome: ");
+					var name = Console.ReadLine();
+					Console.WriteLine("Valor da hora trabalhada: ");
+					var valorHoraTrabalhada = Convert.ToDouble(Console.ReadLine());
+					Console.WriteLine("Horas Trabalhadas: ");
+					var horasTrabalhadas = Convert.ToDouble(Console.ReadLine());
+					Console.WriteLine("Quantidade de dependentes: ");
+					var dependentes = Convert.ToInt32(Console.ReadLine());
+					Console.WriteLine("Imposto: ");
+					var imposto = Convert.ToInt32(Console.ReadLine());
+					if (String.IsNullOrEmpty(name))
+					{
+						Console.WriteLine("Não foi possivel inserir um dos dados.");
+						Console.WriteLine("Por favor entre com valores válidos");
+					}
+					else
+					{
+						funcionarios.Add(new Funcionario(ID, name,
+									    valorHoraTrabalhada,
+									horasTrabalhadas,
+									dependentes,
+									imposto));
+						ID++;
+                  isInserted = true;
+					}
+				}
+				catch (FormatException)
 				{
 					Console.WriteLine("Não foi possivel inserir um dos dados.");
 					Console.WriteLine("Por favor entre com valores válidos");
 				}
-				else
-				{
-					funcionarios.Add(new Funcionario(ID, name,
-								    valorHoraTrabalhada,
-								horasTrabalhadas,
-								dependentes,
-								imposto));
-					ID++;
-				}
-			}
-			catch (FormatException)
-			{
-				Console.WriteLine("Não foi possivel inserir um dos dados.");
-				Console.WriteLine("Por favor entre com valores válidos");
 			}
 
 		}
