@@ -102,7 +102,7 @@ namespace Exercicio2
 			try
 			{
 				Console.Write("Nome: ");
-				var name = Console.ReadLine();
+				var name = Convert.ToString(Console.ReadLine());
 				Console.Write("Preço: ");
 				var price = Convert.ToDouble(Console.ReadLine());
 				produtos.Add(new Produto(Id_Produto, name, price));
@@ -110,7 +110,7 @@ namespace Exercicio2
 			}
 			catch (FormatException)
 			{
-				Console.Write("Você inseriu um valor invalido para o preço.");
+				Console.Write("Você inseriu um valor inválido.");
 			}
 		}
 		static void newSale()
